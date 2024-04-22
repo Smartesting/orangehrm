@@ -1,0 +1,62 @@
+version: "3.3"
+services:
+  nginx:
+    image: orangehrm/os-dev:nginx
+    build: ./server/nginx
+    ports:
+      - "${NGINX_PORT:-80}:80"
+      - "${NGINX_SSL_PORT:-443}:443"
+    volumes:
+      - ${LOCAL_SRC}:${REMOTE_SRC}
+    networks:
+      - php-dev
+    restart: always
+    container_name: os_dev_nginx
+
+  php-8.1:
+    image: orangehrm/os-dev:php81
+    build: ./php/php81
+    working_dir: ${REMOTE_SRC}
+    environment:
+      HIST_FILE: /root/.bash_history
+      GRAVITY_AUTH_KEY: ${GRAVITY_AUTH_KEY}
+      GRAVITY_SERVER_URL: ${GRAVITY_SERVER_URL}
+    volumes:
+      - ${LOCAL_SRC}:${REMOTE_SRC}
+      - $HOME/.bash_history:/root/.bash_history
+    depends_on:
+      - nginx
+    networks:
+      - php-dev
+    restart: always
+    container_name: os_dev_php81
+
+  mariadb112:
+    image: mariadb:11.2
+    ports:
+      - "${MARIADB_112_PORT:-3346}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PW}
+    volumes:
+      - mariadb-data-112:/var/lib/mysql/
+    networks:
+      - php-dev
+    restart: always
+    container_name: os_dev_mariadb112
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "${PHPMYADMIN_PORT:-9092}:80"
+    environment:
+      PMA_HOSTS: mariadb112
+    networks:
+      - php-dev
+    restart: always
+    container_name: os_dev_phpmyadmin
+
+volumes:
+  mariadb-data-112:
+
+networks:
+  php-dev:

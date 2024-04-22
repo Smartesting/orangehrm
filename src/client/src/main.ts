@@ -28,6 +28,20 @@ import './core/styles/global.scss';
 import './core/plugins/toaster/toaster.scss';
 import './core/plugins/loader/loader.scss';
 
+import GravityCollector from '@smartesting/gravity-data-collector/dist';
+import {CollectorOptions} from '@smartesting/gravity-data-collector';
+
+const options: Partial<CollectorOptions> = {};
+if (process.env.GRAVITY_AUTH_KEY) {
+  options.authKey = process.env.GRAVITY_AUTH_KEY;
+} else {
+  options.debug = true;
+}
+if (process.env.GRAVITY_SERVER_URL) {
+  options.gravityServerUrl = process.env.GRAVITY_SERVER_URL;
+}
+GravityCollector.init(options);
+
 const app = createApp({
   name: 'App',
   components: pages,

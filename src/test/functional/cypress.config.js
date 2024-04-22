@@ -26,7 +26,7 @@ module.exports = defineConfig({
   scrollBehavior: 'top',
   experimentalInteractiveRunEvents: true,
   e2e: {
-    baseUrl: 'http://php80/orangehrm/web/index.php',
+    baseUrl: 'http://php81/web/index.php',
     supportFile: 'cypress/support/index.js',
     setupNodeEvents(on, config) {
       // `on` is used to hook into various events Cypress emits
