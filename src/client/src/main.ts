@@ -32,13 +32,13 @@ import GravityCollector from '@smartesting/gravity-data-collector/dist';
 import {CollectorOptions} from '@smartesting/gravity-data-collector';
 
 const options: Partial<CollectorOptions> = {};
-if (process.env.GRAVITY_AUTH_KEY) {
-  options.authKey = process.env.GRAVITY_AUTH_KEY;
+if (process.env.VUE_APP_GRAVITY_AUTH_KEY) {
+  options.authKey = process.env.VUE_APP_GRAVITY_AUTH_KEY;
 } else {
   options.debug = true;
 }
-if (process.env.GRAVITY_SERVER_URL) {
-  options.gravityServerUrl = process.env.GRAVITY_SERVER_URL;
+if (process.env.VUE_APP_GRAVITY_SERVER_URL) {
+  options.gravityServerUrl = process.env.VUE_APP_GRAVITY_SERVER_URL;
 }
 GravityCollector.init(options);
 

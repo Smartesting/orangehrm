@@ -22,7 +22,8 @@ It embeddes [gravity-data-collector](https://github.com/Smartesting/gravity-data
  ```bash
  127.0.0.1 php81
  ```
-
+1. Copy the file __src/client/.env.dist__ to __src/client/.env__
+1. update __src/client/.env__ with your Gravity info
 #### Install Composer
 Composer
 ```bash
